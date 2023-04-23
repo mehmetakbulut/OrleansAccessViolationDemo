@@ -18,11 +18,11 @@ public class MyGrain : Grain, IMyGrain
         return base.OnActivateAsync(cancellationToken);
     }
 
-    public override Task OnDeactivateAsync(DeactivationReason reason, CancellationToken cancellationToken)
+    public override async Task OnDeactivateAsync(DeactivationReason reason, CancellationToken cancellationToken)
     {
         _state.State = new MyState();
-        _state.WriteStateAsync();
-        return base.OnDeactivateAsync(reason, cancellationToken);
+        await _state.WriteStateAsync();
+        await base.OnDeactivateAsync(reason, cancellationToken);
     }
 
     public Task Noop()
